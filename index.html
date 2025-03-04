@@ -215,6 +215,208 @@
             pointer-events: none;
             border-radius: 50%;
         }
+        :root {
+            --bg-color: #f0f2f5;
+            --text-color: #333;
+            --glass-bg: rgba(255,255,255,0.1);
+            --border-color: rgba(255,255,255,0.3);
+            --button-bg: rgba(255,255,255,0.2);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #fff;
+            --glass-bg: rgba(0,0,0,0.2);
+            --border-color: rgba(255,255,255,0.1);
+            --button-bg: rgba(255,255,255,0.1);
+        }
+
+        body {
+            background: linear-gradient(45deg, #8B5CF6, #EC4899);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            background: var(--glass-bg);
+            border: 1px solid var(--border-color);
+        }
+
+        select {
+            background: var(--button-bg);
+            color: var(--text-color);
+        }
+
+        /* Add this new style for select options */
+        select option {
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* Add theme toggle button styles */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--button-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+        }
+        .glass-dropdown {
+            position: relative;
+            width: 200px;
+        }
+
+        .glass-dropdown select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 100%;
+            padding: 12px 40px 12px 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            background: var(--button-bg);
+            color: var(--text-color);
+            font-size: 1rem;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .glass-dropdown select:hover {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .glass-dropdown::after {
+            content: '▼';
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: var(--text-color);
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .glass-dropdown:hover::after {
+            transform: translateY(-50%) scale(1.2);
+        }
+
+        /* Ensure dropdown options are styled properly */
+        .glass-dropdown select option {
+            background: var(--bg-color);
+            color: var(--text-color);
+            padding: 10px;
+        }
+         /* Custom dropdown container */
+        .custom-dropdown {
+            position: relative;
+            width: 200px;
+        }
+
+        /* Dropdown toggle button */
+        .dropdown-toggle {
+            width: 100%;
+            padding: 12px 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            background: var(--button-bg);
+            color: var(--text-color);
+            font-size: 1rem;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dropdown-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .dropdown-toggle::after {
+            content: '▼';
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-toggle.open::after {
+            transform: rotate(180deg);
+        }
+
+        /* Dropdown options (glass morphism table) */
+        .dropdown-options {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            margin-top: 5px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transition: max-height 0.5s ease, opacity 0.3s ease, transform 0.3s ease;
+            z-index: 1000;
+            transform-origin: top;
+            transform: scaleY(0);
+        }
+
+        .dropdown-options.open {
+            max-height: 200px; /* Adjust based on content */
+            opacity: 1;
+            transform: scaleY(1);
+        }
+
+        /* Individual options */
+        .dropdown-option {
+            padding: 10px 20px;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-option:active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .options {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .custom-dropdown {
+                width: 100%;
+            }
+
+            .dropdown-options {
+                position: relative; /* Change to relative for mobile */
+                top: auto;
+                left: auto;
+                margin-top: 10px;
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -230,13 +432,19 @@
             <div class="loading-spinner"></div>
         </div>
         <div class="options">
-            <select id="formatSelect">
-                <option value="jpeg">JPEG</option>
-                <option value="png">PNG</option>
-                <option value="webp">WebP</option>
-            </select>
-            <button onclick="convertImage()">🔮 Convert Now</button>
+        <div class="custom-dropdown">
+            <div class="dropdown-toggle" onclick="toggleDropdown()">
+                <span id="selected-format">JPEG</span>
+                <span class="arrow"></span>
+            </div>
+            <div class="dropdown-options" id="dropdownOptions">
+                <div class="dropdown-option" data-value="jpeg" onclick="selectOption('JPEG')">JPEG</div>
+                <div class="dropdown-option" data-value="png" onclick="selectOption('PNG')">PNG</div>
+                <div class="dropdown-option" data-value="webp" onclick="selectOption('WebP')">WebP</div>
+            </div>
         </div>
+        <button onclick="convertImage()">🔮 Convert Now</button>
+    </div>
         <a id="downloadLink" download>💾 Download Converted File</a>
 
         <div class="about-section">
@@ -251,13 +459,63 @@
             </ul>
         </div>
     </div>
-
+    <button class="theme-toggle" onclick="toggleTheme()">🌓 Toggle Theme</button>
     <div class="creator-credit">
         Crafted with ♥ by MG Jiwana
     </div>
 
     <script>
-        // Previous JavaScript code remains the same, with these additions:
+        function detectSystemTheme() {
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+        }
+
+        function toggleTheme() {
+            const currentTheme = localStorage.getItem('theme') || detectSystemTheme();
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(newTheme);
+        }
+
+        // Initialize theme
+        const savedTheme = localStorage.getItem('theme');
+        const systemTheme = detectSystemTheme();
+        applyTheme(savedTheme || systemTheme);
+
+        // Watch for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (!localStorage.getItem('theme')) {
+                applyTheme(e.matches ? 'dark' : 'light');
+            }
+        });
+
+        // Custom dropdown functionality
+        function toggleDropdown() {
+            const dropdownOptions = document.getElementById('dropdownOptions');
+            const toggleButton = document.querySelector('.dropdown-toggle');
+            dropdownOptions.classList.toggle('open');
+            toggleButton.classList.toggle('open');
+        }
+
+        function selectOption(format) {
+            const selectedFormat = document.getElementById('selected-format');
+            selectedFormat.textContent = format;
+            toggleDropdown(); // Close dropdown after selection
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (event) => {
+            const dropdown = document.querySelector('.custom-dropdown');
+            if (!dropdown.contains(event.target)) {
+                const dropdownOptions = document.getElementById('dropdownOptions');
+                dropdownOptions.classList.remove('open');
+                document.querySelector('.dropdown-toggle').classList.remove('open');
+            }
+        });
+        
         const dropZone = document.getElementById('dropZone');
         const fileInput = document.getElementById('fileInput');
         const preview = document.getElementById('preview');
@@ -410,8 +668,7 @@
             }, 1000);
         }
 
-        // Previous event listeners and handlers remain the same
-        // ... (Include all previous JavaScript code here)
+        
     </script>
 </body>
 </html>
