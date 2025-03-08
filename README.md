@@ -24,7 +24,7 @@ A modern web-based image converter with a beautiful glass morphism design, offer
 ## Installation 💻
 No server required! Just clone and open:
 ```bash
-git clone https://github.com/mahesh-space/Image-Alchemy.git
+git clone https://github.com/your-username/Image-Alchemy.git
 cd Image-Alchemy
 # Open index.html in a modern browser
 ```
